@@ -4,10 +4,15 @@ import Genres from '../assets/Genres.json'
 import { clearSelectedGenre, selectedGenre, setSelectedGenre } from '../store/UserStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiTwotoneCloseCircle } from "react-icons/ai";
+import { setCurrentPage } from '../store/LibStore';
 
 const GenreBar = () => {
     const dispatch = useDispatch()
     const userSelectedGenre = useSelector(selectedGenre)
+    const selectGenre = (genre) => {
+        dispatch(setCurrentPage(1))
+        dispatch(setSelectedGenre(genre))
+    }
     return (
         <Dropdown className='mt-3 d-flex'>
             <Dropdown.Toggle variant="info" id="dropdown-basic">
@@ -18,13 +23,14 @@ const GenreBar = () => {
                 {Genres.map(genre => 
                     <Dropdown.Item 
                         key={genre.id}
-                        onClick={() => dispatch(setSelectedGenre(genre))}
+                        onClick={() => selectGenre(genre)}
                     >
                         {genre.name}
                     </Dropdown.Item>
                 )}
             </Dropdown.Menu>
-            {userSelectedGenre
+            {
+                userSelectedGenre
                 ?
                 <>
                     <Card

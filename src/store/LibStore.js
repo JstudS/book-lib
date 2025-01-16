@@ -1,54 +1,97 @@
 import { createSlice } from "@reduxjs/toolkit";
+import FullLibList from '../assets/FullLibList.json'
 
 const initialState = {
-    titleText: '',
-    isStoredText: false,
+    isStoreUsed: false,
+    fullLibArray: FullLibList,
     isModalForText: false,
-    titleInfo: [
-        {id: 1, title: "Тип", description: ""},
-        {id: 2, title: "Рік", description: ""},
-        {id: 3, title: "Глави", description: ""},
-        {id: 4, title: "Статус", description: ""},
-        {id: 5, title: "Франшиза", description: ""},
-        {id: 6, title: "Автори", description: ""},
-        {id: 7, title: "Видавці", description: ""}
-    ],
-    isStoredInfo: false,
     isModalForInfo: false,
+    isNotAuthModal: false,
+    currentPage: 1,
+    totalCount: 0,
+    limit: 2,
+    isEmptyTitleArray: false
 }
 
 export const libList = createSlice({
     name: 'libList',
     initialState,
     reducers: {
-        setTitleText: (state, action) => {
-            state.titleText = action.payload
+        setFullLibArray: (state, action) => {
+            state.fullLibArray.map((el) => {
+                if(el.typeName === action.payload.typename){
+                    el.typeList.map(element => {
+                        if(element.name === action.payload.name){
+                            element.pageInfo.text = action.payload.text   
+                        }
+                        return ''
+                    })
+                }
+                return ''
+            }) 
         },
         setTitleInfo: (state, action) => {
-            state.titleInfo = action.payload
+            state.fullLibArray.map((el) => {
+                if(el.typeName === action.payload.typename){
+                    el.typeList.map(element => {
+                        if(element.name === action.payload.name){
+                            element.pageInfo.mainInfo = action.payload.info   
+                        }
+                        return ''
+                    })
+                }
+                return ''
+            }) 
         },
-        setIsStoredText: (state, action) => {
-            state.isStoredText = !state.isStored
-        },
-        setIsStoredInfo: (state, action) => {
-            state.isStoredInfo = !state.isStoredInfo
+        setIsStoreUsed: (state, action) => {
+            state.isStoreUsed = true
         },
         setIsModalForText: (state, action) => {
             state.isModalForText = !state.isModalForText
         },
         setIsModalForInfo: (state, action) => {
             state.isModalForInfo = !state.isModalForInfo
+        },
+        setIsNotAuthModal: (state, action) => {
+            state.isNotAuthModal = !state.isNotAuthModal
+        },
+        setCurrentPage: (state, action) => {
+            state.currentPage = action.payload
+        },
+        setTotalCount: (state, action) => {
+            state.totalCount = action.payload
+        },
+        setLimit: (state, action) => {
+            state.limit = action.payload
+        },
+        setIsEmptyTitleArray: (state, action) => {
+            state.isEmptyTitleArray = action.payload
         }
     } 
+
 })
  
-export const {setTitleText, setTitleInfo, setIsStoredText, setIsModalForText, setIsModalForInfo, setIsStoredInfo} = libList.actions
-export const titleText = (state) => state.libStore.titleText
-export const titleInfo = (state) => state.libStore.titleInfo
-export const isStoredText = (state) => state.libStore.isStoredText
-export const isStoredInfo = (state) => state.libStore.isStoredInfo
+export const {
+        setIsStoreUsed, 
+        setIsModalForText, 
+        setIsModalForInfo, 
+        setFullLibArray,
+        setTitleInfo,
+        setIsNotAuthModal,
+        setCurrentPage,
+        setTotalCount,
+        setLimit,
+        setIsEmptyTitleArray
+    } = libList.actions
+export const isStoreUsed = (state) => state.libStore.isStoreUsed
 export const isModalForText = (state) => state.libStore.isModalForText
 export const isModalForInfo = (state) => state.libStore.isModalForInfo
+export const isNotAuthModal = (state) => state.libStore.isNotAuthModal
+export const fullLibArray = (state) => state.libStore.fullLibArray
+export const currentPage = (state) => state.libStore.currentPage
+export const totalCount = (state) => state.libStore.totalCount
+export const limit = (state) => state.libStore.limit
+export const isEmptyTitleArray = (state) => state.libStore.isEmptyTitleArray
 
 
 const libStore = libList.reducer

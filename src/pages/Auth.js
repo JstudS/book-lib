@@ -5,42 +5,85 @@ import Form from 'react-bootstrap/Form';
 import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { setIsAuth } from '../store/UserStore';
-import { SHOP_ROUTE } from '../utils/consts';
+import { LIBRARY_ROUTE } from '../utils/consts';
+import { useFormik } from 'formik';
+import { authSchema } from '../schemas';
 
 const Auth = () => {
     const [isRegistrationForm, setIsRegistrtionForm] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const logIn = () => {
+
+    const onSubmit = (values, actions) => {
         dispatch(setIsAuth())
-        navigate(SHOP_ROUTE)
+        actions.resetForm()
+        navigate(LIBRARY_ROUTE)
     }
+    const {values, errors, handleBlur, handleChange, handleSubmit} = useFormik({
+        initialValues: {
+            email: "",
+            password: ""
+        },
+        validationSchema: authSchema,
+        onSubmit
+    })
+
+    const passwordCheck = errors.password ? <div style={{color: 'red'}}>{errors.password}</div> : "Пароль повинен містити мінімум 1 велику букву, 1 маленьку букву і 1 цифру"
+    
     return (
-        <Container 
+        <Container
             className='d-flex justify-content-center align-items-center'
             style={{height: window.innerHeight - 54}}
             >
             <Card
                 className='p-5 w-75'
                 border='dark'
-                >
+            >
                 <h2 className='m-auto mb-3'>{isRegistrationForm ? 'Регістрація' : 'Авторизація'}</h2>
-                <Form>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group className="mb-3" >
                         <Form.Label className='fw-semibold'>Електронна пошта</Form.Label>
-                        <Form.Control type="email" placeholder="Введіть електронну пошту" />
+                            <div>
+                                <input 
+                                    value={values.email}
+                                    id='email' 
+                                    type="email"
+                                    placeholder="Введіть електронну пошту" 
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    style={errors.email 
+                                        ? 
+                                        {width: '100%', padding: '6px 12px', borderRadius: '5px', border: ' 1px solid red'} 
+                                        : 
+                                        {width: '100%', padding: '6px 12px', borderRadius: '5px', border: ' 1px solid #dee2e6'}}
+                                />
+                            </div>
                         <Form.Text className="text-muted">
-                            Ніколи не діліться своєю поштою та паролем
+                            {errors.email ? <div style={{color: 'red'}}>{errors.email}</div> : "Ніколи не діліться своєю поштою та паролем"}
                         </Form.Text>
                     </Form.Group>
-            
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Group >
                         <Form.Label className='fw-semibold'>Пароль</Form.Label>
-                        <Form.Control type="password" placeholder="Введіть пароль" />
+                            <div>
+                                <input 
+                                    value={values.password}
+                                    id='password' 
+                                    type="password"
+                                    placeholder="Введіть пароль" 
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    style={errors.password 
+                                        ? 
+                                        {width: '100%', padding: '6px 12px', borderRadius: '5px', border: ' 1px solid red'} 
+                                        : 
+                                        {width: '100%', padding: '6px 12px', borderRadius: '5px', border: ' 1px solid #dee2e6'}}
+                                />
+                            </div>
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    </Form.Group>
-                    <Row className='d-felx justify-content-between p-1'>
+                    <Form.Text className="text-muted">
+                            { isRegistrationForm ? passwordCheck : ''}
+                    </Form.Text>
+                    <Row className='d-felx justify-content-between p-1 mt-3'>
                         <div className='w-50'>
                             {isRegistrationForm ? 'Є акаунт?' : 'Немає акаунту?'}
                             <NavLink 
@@ -54,9 +97,9 @@ const Auth = () => {
                             style={{width: 'auto'}}
                             className='me-2 mt-4 px-4 py-2' 
                             variant="primary"
-                            onClick={() => logIn()}
+                            type='submit'
                         >
-                            Ввійти
+                            { isRegistrationForm ? 'Регістрація' : 'Ввійти'}
                         </Button>
                     </Row>
                 </Form>

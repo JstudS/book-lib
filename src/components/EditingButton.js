@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FaPencil } from 'react-icons/fa6';
-import { useDispatch } from 'react-redux';
-import { setIsModalForInfo, setIsModalForText, setIsStoredInfo, setIsStoredText } from '../store/LibStore';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsModalForInfo, setIsModalForText, setIsNotAuthModal } from '../store/LibStore';
+import { userIsAuth } from '../store/UserStore';
 
 const EditingButton = ({title}) => {
+
     const dispatch = useDispatch()
+    const isAuth = useSelector(userIsAuth)
+    
     const setText = () => {
         dispatch(setIsModalForText())
     } 
     
     const setInfo = () => {
         dispatch(setIsModalForInfo())
-    }   
+    }
+    
+    const setModalAuth = () => {
+        dispatch(setIsNotAuthModal())
+    }
+
+    const modalToChangeCheck = title === 'text' ? setText : setInfo
     return (
         <OverlayTrigger
             placement='top'
@@ -26,7 +36,7 @@ const EditingButton = ({title}) => {
                     right: '15px',
                     cursor: 'pointer'
                 }}
-                onClick={() => title === 'text' ? setText() : setInfo()} 
+                onClick={ isAuth ? modalToChangeCheck : setModalAuth}  
             >
                 <FaPencil />
             </div>

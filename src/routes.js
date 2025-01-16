@@ -1,17 +1,12 @@
-import Admin from "./pages/Admin"
 import Auth from "./pages/Auth"
 import LibPage from "./pages/LibPage"
-import Shop from "./pages/Shop"
-import { ADMIN_ROUTE, LIBPAGE_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from "./utils/consts"
+import Library from "./pages/Library"
+import { LIBPAGE_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, LIBRARY_ROUTE } from "./utils/consts"
 
 export const authRoutes = [
     {
-        path: ADMIN_ROUTE,
-        component: Admin
-    },
-    {
-        path: SHOP_ROUTE,
-        component: Shop
+        path: LIBRARY_ROUTE,
+        component: Library
     },
     {
         path: LIBPAGE_ROUTE + '/:type/:id',
@@ -21,8 +16,8 @@ export const authRoutes = [
 
 export const publicRoutes = [
     {
-        path: SHOP_ROUTE,
-        component: Shop
+        path: LIBRARY_ROUTE,
+        component: Library
     },
     {
         path: LOGIN_ROUTE,
