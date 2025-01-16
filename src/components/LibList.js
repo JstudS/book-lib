@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Row } from 'react-bootstrap';
 import FullLibList from '../assets/FullLibList.json'
 import LibItem from './LibItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectedGenre, selectedType } from '../store/UserStore';
-import { currentPage, limit, setIsEmptyTitleArray, setTotalCount } from '../store/LibStore';
+import { currentPage, limit, setTotalCount } from '../store/LibStore';
 
 const LibList = () => {
     const dispatch = useDispatch()
@@ -14,7 +14,7 @@ const LibList = () => {
     const genre = useSelector(selectedGenre)
     let totalTitles = ''
     const getVisibleGenres = (elem) => {
-        
+
         totalTitles = elem.typeList.length
         const idOfLastTitle = currentPageActive  * titleLimit
         const idOfFirstTitle = idOfLastTitle - titleLimit

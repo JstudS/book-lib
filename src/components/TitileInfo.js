@@ -3,7 +3,7 @@ import { Card, Col, Container, Row} from 'react-bootstrap';
 import {fullImages} from '../assets/images'
 import EditingButton from './EditingButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { isModalForInfo, isModalForText, isNotAuthModal, setIsModalForInfo, setIsModalForText, setIsNotAuthModal } from '../store/LibStore';
+import { isModalForInfo, isModalForText, setIsModalForInfo, setIsModalForText } from '../store/LibStore';
 import ModalForText from './ModalForText';
 import ModalForInfo from './ModalForInfo';
 import ModalNotAuth from './ModalNotAuth';
@@ -11,7 +11,6 @@ import ModalNotAuth from './ModalNotAuth';
 const TitileInfo = ({titlePageInfo, titleTypeName, titleName}) => {
     const isModalForInfoStored = useSelector(isModalForInfo)
     const isModalForTextStored = useSelector(isModalForText)
-    const notAuthModal = useSelector(isNotAuthModal)
     const dispatch = useDispatch()
     return (
         <Container className='d-flex flex-column'>

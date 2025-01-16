@@ -19,7 +19,7 @@ const NavBar = () => {
         isAdmin
         ?
         <Navbar className='px-5' bg="dark" data-bs-theme="dark">
-        <div className='fs-4' style={{color: 'white', cursor: 'pointer'}} onClick={() => navigate(LIBRARY_ROUTE)}>СвітКниг</div>
+            <div className='fs-4' style={{color: 'white', cursor: 'pointer'}} onClick={() => navigate(LIBRARY_ROUTE)}>СвітКниг</div>
         <Nav className='ms-auto'>
             <Button variant='secondary' onClick={() => logOut()}>Вийти</Button>
         </Nav>
