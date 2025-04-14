@@ -8,6 +8,7 @@ This project was built using :
 - Redux Toolkit
 - React Hooks  
 
+LIVE DEMO: https://book-lib-one.vercel.app/library
 
 In the project directory, you can run:
 
